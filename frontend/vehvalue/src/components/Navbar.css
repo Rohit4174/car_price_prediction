@@ -1,0 +1,28 @@
+.logo {
+  height: 55px;
+  width: auto;
+  object-fit: contain;
+  padding: 5px;
+  border-radius: 20px;
+}
+.navbar1 {
+  margin: 0;
+  background-color:rgb(196, 196, 196);
+ padding: '10px';}
+.h1{
+position: absolute;
+  top: 2px;
+  left: 80px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 25px;
+  color: #0b8078;
+  font-weight: bold;
+}
+.h2{
+  position: absolute;
+  top: 35px;
+  left: 150px;
+  font-size: 15px;
+  color: #0b4280;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+font-style: italic;}
