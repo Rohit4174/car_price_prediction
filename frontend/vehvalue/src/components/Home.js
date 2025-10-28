@@ -1,118 +1,189 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import './Home.css';
-import Dropdown from './Dropdown';
-import video from './bgvdo.mp4';
-import axios from 'axios';
-const seller = ['Dealer', 'Individual'];
-const fuel= ['Petrol', 'Diesel', 'CNG', 'Electric'];
-const transmission = ['Manual', 'Automatic'];   
-const condition = ['Excellent', 'Good', 'Bad'];
-const color = ['Red', 'Blue', 'Black', 'White', 'Silver', 'Grey', 'Yellow'];
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+import background from './background.jpg';
+import about from './about.jpg';
+import why from './why.jpg';
+import flow from './flow.jpg';
+import factor from './factor.jpg';
+import increase from './increase.jpg';
+import image from './image.png';
 
 function Home() {
-const API_URL = "https://car-price-prediction-aiy5.onrender.com/data";
+  const navigate = useNavigate();
+  const API_URL = "https://car-price-prediction-aiy5.onrender.com/data";
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
 
- const formData = {
-    brand,
-    model,
-    vehicle_age: age,
-    km_driven:kmDriven,
-    seller_type: selectedSeller,
-    fuel_type: selectedFuel,
-    transmission_type: selectedTransmission,
-    condition: selectedCondition,
-    color: selectedColor
-    
+  // Input states
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
+  const [age, setAge] = useState('');
+  const [kmDriven, setKmDriven] = useState('');
+  const [selectedSeller, setSelectedSeller] = useState('');
+  const [selectedFuel, setSelectedFuel] = useState('');
+  const [selectedTransmission, setSelectedTransmission] = useState('');
+  const [selectedCondition, setSelectedCondition] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+
+  // Navigation
+  const Calculateclick = () => {
+    navigate("/Calculate");
   };
 
+  // Open brand logos site
+  const handleImageClick = () => {
+    window.open("https://www.carlogos.org/car-brands/", "_blank");
+  };
 
-  try {
-    const res =await axios.post('API_URL', formData,{
-      headers: {
-        'Content-Type': 'application/json'  
-      }
-    });
-    console.log("API Response:", res.data);
-    alert("Predicted Price: ₹" + res.data.predicted_price);
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Something went wrong!");
-  }
-};
+  // Example button handler for API call
+  const handlePredict = async () => {
+    const formData = {
+      brand,
+      model,
+      vehicle_age: age,
+      km_driven: kmDriven,
+      seller_type: selectedSeller,
+      fuel_type: selectedFuel,
+      transmission_type: selectedTransmission,
+      condition: selectedCondition,
+      color: selectedColor
+    };
 
-
-
-//const[selectedColor, setSelectedColor] = React.useState('');
- const [brand, setBrand] = useState('');
-const [model, setModel] = useState('');
-const [age, setAge] = useState('');
-const [kmDriven, setKmDriven] = useState('');
-
-const [selectedSeller, setSelectedSeller] = useState('');
-const [selectedFuel, setSelectedFuel] = useState('');
-const [selectedTransmission, setSelectedTransmission] = useState('');
-const [selectedCondition, setSelectedCondition] = useState('');
-const [selectedColor, setSelectedColor] = useState('');
+    try {
+      const res = await axios.post(API_URL, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log("API Response:", res.data);
+      alert("Predicted Price: ₹" + res.data.predicted_price);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong!");
+    }
+  };
 
   return (
-    <>
-    <div style={{ backgroundColor: "#121111", color: "#fff", padding: "20px" }}>
-   
- <div className="container">
-  <div className="left">
-    <video
-  autoPlay
-  loop
-  muted
-  playsInline
-  style={{
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover'
-  }}>
-
-  <source src={video} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
-     <div className="overlay-text">
-        <h2>“Your Car’s True Value—Predicted by Intelligence.”</h2>
-        <p>Smarter Car Pricing Starts Here</p>
-        
+    <div className="home-page">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <img src={background} alt="Car Background" className="hero-image" />
+        <div id="home-container" data-aos="zoom-in">
+          <h1><span>Welcome</span> to the Vehicle Value App</h1>
+          <p>Explore the value of your vehicle with us!</p>
+          <button id="cal" onClick={Calculateclick}>Calculate</button>
+          <button id="predict" onClick={handlePredict}>Predict Price</button>
+        </div>
       </div>
-  </div>
-  <div className="home-container" style={{paddingLeft:'20px'}}>
-       <h1><span>Welcome</span> to the Vehicle Value App</h1>
-      <p>Explore the value of your vehicle with us!</p>
-  </div>
-</div>
-<br></br>
- <div className="home-container" style={{backgroundColor:"black"}}>
-  <center>
-  <input type="text" placeholder="Enter the Car Brand" value={brand} onChange={(e) => setBrand(e.target.value)} /><br />
-<input type="text" placeholder="Enter the Car Model" value={model} onChange={(e) => setModel(e.target.value)} /><br />
-<input type="text" placeholder="Enter the Car Age" value={age} onChange={(e) => setAge(e.target.value)} /><br />
-<input type="text" placeholder="Enter the Car kilometers" value={kmDriven} onChange={(e) => setKmDriven(e.target.value)} /><br />
 
- <Dropdown label="Select Car seller-type:" options={seller} selected={selectedSeller} onSelect={(value)=> setSelectedSeller(value)} />
+      {/* About Section */}
+      <section>
+        <h2 className="section-title">About VechValuator</h2>
+        <div className="about" data-aos="fade-down">
+          <div className="about-content">
+            <p>
+              VechValuator is an AI-powered platform delivering ultra-accurate, real-time resale values for your car—trade-in, private sale, or online listings. 
+              It analyzes thousands of datapoints, including market trends, depreciation, and regional demand, to pinpoint where you’ll get the best price.
+            </p>
+          </div>
+          <div className="about-image">
+            <img src={about} alt="About VechValuator" data-aos="fade-left" />
+          </div>
+        </div>
+      </section>
 
-<Dropdown label="Select Fuel Type:" options={fuel} selected={selectedFuel} onSelect={(value) => setSelectedFuel(value)} />
+      {/* Why Choose Section */}
+      <section>
+        <h2 className="section-title">Why Choose VechValuator?</h2>
+        <div className="about" data-aos="fade-down">
+          <div className="about-content">
+            <ul>
+              <li>AI-Powered Accuracy – Trained on real-world car sales data</li>
+              <li>Instant Price Estimate – Get your car's estimated price in seconds</li>
+              <li>Wide Brand Coverage – Supports both Indian and international brands</li>
+              <li>User-Friendly Interface – Simple design for all users</li>
+              <li>Free to Use – No hidden charges</li>
+            </ul>
+          </div>
+          <div className="about-image">
+            <img src={why} alt="Why Choose VechValuator" data-aos="fade-left" />
+          </div>
+        </div>
+      </section>
 
-<Dropdown label="Select Transmission Type:" options={transmission} selected={selectedTransmission} onSelect={(value) => setSelectedTransmission(value)} />
+      {/* How It Works */}
+      <section>
+        <h2 className="section-title">How It Works</h2>
+        <div className="about" data-aos="fade-down">
+          <div className="about-content">
+            <ol>
+              <li>Enter Your Car Details – Select brand, model, year, mileage, etc.</li>
+              <li>Our Model Analyzes Data – Compares with historical sales records</li>
+              <li>Get an Instant Price Estimate – View the predicted price range</li>
+            </ol>
+          </div>
+          <div className="about-image">
+            <img src={flow} alt="How It Works" data-aos="fade-left" />
+          </div>
+        </div>
+      </section>
 
- <Dropdown label="Select Condition:" options={condition} selected={selectedCondition} onSelect={(value) => setSelectedCondition(value)} /> 
+      {/* Factors Affecting Resale Value */}
+      <section>
+        <h2 className="section-title">Factors Affecting Car Resale Value</h2>
+        <div className="about" data-aos="fade-down">
+          <div className="about-content">
+            <ul>
+              <li>Brand & Model Popularity</li>
+              <li>Age of the Car</li>
+              <li>Mileage Driven</li>
+              <li>Fuel Type</li>
+              <li>Condition & Maintenance</li>
+              <li>Ownership History</li>
+            </ul>
+          </div>
+          <div className="about-image">
+            <img src={factor} alt="Car Resale Factors" data-aos="fade-left"/>
+          </div>
+        </div>
+      </section>
 
- <Dropdown label="Select Color:" options={color} selected={selectedColor} onSelect={(value) => setSelectedColor(value)} /> 
+      {/* Tips to Increase Value */}
+      <section>
+        <h2 className="section-title">Tips to Increase Your Car’s Resale Value</h2>
+        <div className="about" data-aos="fade-down">
+          <div className="about-content">
+            <ul>
+              <li>Keep service history records up-to-date</li>
+              <li>Maintain cleanliness and proper upkeep</li>
+              <li>Fix dents, scratches, and small mechanical issues</li>
+              <li>Sell at the right market time</li>
+            </ul>
+          </div>
+          <div className="about-image">
+            <img src={increase} alt="Tips to Increase Car Value" data-aos="fade-left"/>
+          </div>
+        </div>
+      </section>
 
-            <input type="submit" name="submit" value="Submit" className="submit-button" onClick={handleSubmit} />
-        <input type="reset" name="reset" value="Reset" className="reset-button" onClick={() => window.location.reload()} />
-      </center>
-      
+      {/* Brand Image */}
+      <div className="image">
+        <img src={image} alt="brand" style={{ width: "100%", height: "auto" }} onClick={handleImageClick} data-aos="fade-left" />
+      </div>
+
+      {/* Disclaimer */}
+      <p className="disclaimer">
+        Disclaimer: VechValuator provides an estimated market price based on available data and statistical models.
+        Actual selling price may vary depending on local market conditions, demand, and buyer preferences.
+      </p>
     </div>
-    </div>
-    </>
   );
 }
+
 export default Home;

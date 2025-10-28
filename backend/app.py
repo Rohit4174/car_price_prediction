@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load model and encoder
-model = joblib.load("car_pricemodel1.pkl")
+model = joblib.load("car_pricemodel.pkl")
 encoder = joblib.load("encoders.pkl")
 
 @app.route("/data", methods=["POST"])
@@ -56,7 +56,7 @@ def receive_data():
 
         #  Predict
         predicted_price = model.predict(input_data)[0]
-        predicted_price = round(predicted_price/2, 2)
+        # predicted_price = round(predicted_price/2, 2)
 
         return jsonify({"predicted_price": predicted_price}), 200
 
