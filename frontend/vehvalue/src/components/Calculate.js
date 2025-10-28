@@ -88,7 +88,8 @@ const [selectedColor, setSelectedColor] = useState('');
             value={price}
             readOnly
             placeholder="Your car price will appear here..."
-            style={{ width: "300px", textAlign: "center", fontWeight: "bold", fontSize: "16px" }}
+            style={{ width: "300px", textAlign: "center", fontWeight: "bold", fontSize: "16px" ,borderRadius: "10px",  boxShadow: "0 0 10px #cece39" , padding: "10px",borderColor:'#ff6b6b'
+}}
           />  </center></div>   
      </div>
     </>
