@@ -1,0 +1,33 @@
+# Ignore model and large binary files
+*.pkl
+*.h5
+*.sav
+*.zip
+*.tar
+*.gz
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore build and node_modules folders
+node_modules/
+build/
+dist/
+
+# Ignore environment and config files
+.env
+.DS_Store
+
+# Ignore Flask instance folder
+instance/
+
+# Ignore IDE or editor files
+.vscode/
+.idea/
