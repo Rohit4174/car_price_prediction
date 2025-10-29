@@ -9,6 +9,7 @@ const condition = ['Excellent', 'Good', 'Bad'];
 const color = ['Red', 'Blue', 'Black', 'White', 'Silver', 'Grey', 'Yellow'];
 
 function Calculate() {
+ const API_URL = "https://your-flask-backend.onrender.com/data";
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -28,7 +29,7 @@ const handleSubmit = async (e) => {
 
 
   try {
-    const res =await axios.post('http://127.0.0.1:5000/data', formData,{
+    const res =await axios.post('API_URL', formData,{
       headers: {
         'Content-Type': 'application/json'  
       }
