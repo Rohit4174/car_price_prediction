@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
 
 
   try {
-    const res =await axios.post('API_URL', formData,{
+    const res =await axios.post(API_URL, formData,{
       headers: {
         'Content-Type': 'application/json'  
       }
