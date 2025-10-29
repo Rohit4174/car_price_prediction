@@ -9,8 +9,7 @@ const condition = ['Excellent', 'Good', 'Bad'];
 const color = ['Red', 'Blue', 'Black', 'White', 'Silver', 'Grey', 'Yellow'];
 
 function Calculate() {
- const API_URL = "https://your-flask-backend.onrender.com/data";
-
+const API_URL = "https://<your-flask-backend>.onrender.com/data";
 const handleSubmit = async (e) => {
   e.preventDefault();
 
