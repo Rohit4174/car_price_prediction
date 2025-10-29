@@ -1,66 +1,52 @@
 import React, { useState, useEffect } from "react";
-import './Home.css';
+import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import axios from "axios";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
-import background from './background.jpg';
-import about from './about.jpg';
-import why from './why.jpg';
-import flow from './flow.jpg';
-import factor from './factor.jpg';
-import increase from './increase.jpg';
-import image from './image.png';
+import background from "./background.jpg";
+import about from "./about.jpg";
+import why from "./why.jpg";
+import flow from "./flow.jpg";
+import factor from "./factor.jpg";
+import increase from "./increase.jpg";
+import image from "./image.png";
 
 function Home() {
   const navigate = useNavigate();
   const API_URL = "https://car-price-prediction-aiy5.onrender.com/data";
 
-  // Initialize AOS
+  const [formData, setFormData] = useState({
+    brand: "",
+    model: "",
+    age: "",
+    kmDriven: "",
+    selectedSeller: "",
+    selectedFuel: "",
+    selectedTransmission: "",
+    selectedCondition: "",
+    selectedColor: ""
+  });
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
-  // Input states
-  const [brand, setBrand] = useState('');
-  const [model, setModel] = useState('');
-  const [age, setAge] = useState('');
-  const [kmDriven, setKmDriven] = useState('');
-  const [selectedSeller, setSelectedSeller] = useState('');
-  const [selectedFuel, setSelectedFuel] = useState('');
-  const [selectedTransmission, setSelectedTransmission] = useState('');
-  const [selectedCondition, setSelectedCondition] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
-
-  // Navigation
   const Calculateclick = () => {
     navigate("/Calculate");
   };
 
-  // Open brand logos site
   const handleImageClick = () => {
     window.open("https://www.carlogos.org/car-brands/", "_blank");
   };
 
-  // Example button handler for API call
+  // ✅ Correctly wrapped in async function
   const handlePredict = async () => {
-    const formData = {
-      brand,
-      model,
-      vehicle_age: age,
-      km_driven: kmDriven,
-      seller_type: selectedSeller,
-      fuel_type: selectedFuel,
-      transmission_type: selectedTransmission,
-      condition: selectedCondition,
-      color: selectedColor
-    };
-
     try {
       const res = await axios.post(API_URL, formData, {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" }
       });
+
       console.log("API Response:", res.data);
       alert("Predicted Price: ₹" + res.data.predicted_price);
     } catch (error) {
@@ -75,10 +61,13 @@ function Home() {
       <div className="hero-section">
         <img src={background} alt="Car Background" className="hero-image" />
         <div id="home-container" data-aos="zoom-in">
-          <h1><span>Welcome</span> to the Vehicle Value App</h1>
+          <h1>
+            <span>Welcome</span> to the Vehicle Value App
+          </h1>
           <p>Explore the value of your vehicle with us!</p>
-          <button id="cal" onClick={Calculateclick}>Calculate</button>
-          <button id="predict" onClick={handlePredict}>Predict Price</button>
+          <button id="cal" onClick={Calculateclick}>
+            Calculate
+          </button>
         </div>
       </div>
 
@@ -88,8 +77,11 @@ function Home() {
         <div className="about" data-aos="fade-down">
           <div className="about-content">
             <p>
-              VechValuator is an AI-powered platform delivering ultra-accurate, real-time resale values for your car—trade-in, private sale, or online listings. 
-              It analyzes thousands of datapoints, including market trends, depreciation, and regional demand, to pinpoint where you’ll get the best price.
+              VechValuator is an AI-powered platform delivering ultra-accurate,
+              real-time resale values for your car—trade-in, private sale, or
+              online listings. It analyzes thousands of datapoints, including
+              market trends, depreciation, and regional demand, to pinpoint
+              where you’ll get the best price.
             </p>
           </div>
           <div className="about-image">
@@ -149,7 +141,7 @@ function Home() {
             </ul>
           </div>
           <div className="about-image">
-            <img src={factor} alt="Car Resale Factors" data-aos="fade-left"/>
+            <img src={factor} alt="Car Resale Factors" data-aos="fade-left" />
           </div>
         </div>
       </section>
@@ -167,17 +159,28 @@ function Home() {
             </ul>
           </div>
           <div className="about-image">
-            <img src={increase} alt="Tips to Increase Car Value" data-aos="fade-left"/>
+            <img src={increase} alt="Tips to Increase Car Value" data-aos="fade-left" />
           </div>
         </div>
       </section>
 
-      {/* Brand Image */}
       <div className="image">
-        <img src={image} alt="brand" style={{ width: "100%", height: "auto" }} onClick={handleImageClick} data-aos="fade-left" />
+        <img
+          src={image}
+          alt="brand"
+          style={{ width: "100%", height: "auto" }}
+          onClick={handleImageClick}
+          data-aos="fade-left"
+        />
       </div>
 
-      {/* Disclaimer */}
+      {/* Example button to trigger prediction
+      <div style={{ textAlign: "center", margin: "30px" }}>
+        <button onClick={handlePredict} className="predict-btn">
+          Predict Price
+        </button>
+      </div> */}
+
       <p className="disclaimer">
         Disclaimer: VechValuator provides an estimated market price based on available data and statistical models.
         Actual selling price may vary depending on local market conditions, demand, and buyer preferences.
