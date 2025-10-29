@@ -4,12 +4,15 @@ import joblib
 import pandas as pd
 import traceback
 import os
+import joblib, gzip
+
 
 app = Flask(__name__) 
 CORS(app)
 
 # Load model and encoder
-model = joblib.load("car_pricemodel.pkl")
+with gzip.open("car_pricemodel_binary_compressed.pkl.gz", "rb") as f:
+  model = joblib.load(f)
 encoder = joblib.load("encoders.pkl")
 
 @app.route("/data", methods=["POST"])
